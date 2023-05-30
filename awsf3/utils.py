@@ -309,10 +309,14 @@ def create_output_files_dict(language='cwl', execution_metadata=None, md5dict=No
         # read cwl output json file
         out_meta = execution_metadata
 
+    print(out_meta)
+    print(md5dict)
     # add md5
     if not md5dict:
         md5dict = {}
     for of, ofv in out_meta.items():
+        print(of)
+        print(ofv)
         if ofv['path'] in md5dict:
             ofv['md5sum'] = md5dict[ofv['path']]
         if 'secondaryFiles' in ofv:
