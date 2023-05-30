@@ -148,7 +148,7 @@ EBS_MOUNT_POINT = '/mnt/data1'
 DEFAULT_ROOT_EBS_SIZE = 8
 
 # Default awsf image
-DEFAULT_AWSF_IMAGE = '4dndcic/tibanna-awsf:' + __version__
+DEFAULT_AWSF_IMAGE = 'babessell/tibanna-awsf:' + __version__
 
 SFN_TYPE = 'unicorn'
 LAMBDA_TYPE = ''
