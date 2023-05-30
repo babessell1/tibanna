@@ -1,7 +1,7 @@
 #!/bin/bash
 shopt -s extglob
 export TIBANNA_VERSION=
-export AWSF_IMAGE=
+export AWSF_IMAGE="babessell/tibanna-awsf:3.3.2
 export SHUTDOWN_MIN=now
 export PASSWORD=
 export ACCESS_KEY=
