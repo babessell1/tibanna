@@ -1,7 +1,7 @@
 #!/bin/bash
 shopt -s extglob
 export TIBANNA_VERSION=
-export AWSF_IMAGE="babessell/tibanna-awsf:3.3.2
+export AWSF_IMAGE=
 export SHUTDOWN_MIN=now
 export PASSWORD=
 export ACCESS_KEY=
@@ -115,7 +115,7 @@ if [ -z "$TIBANNA_VERSION" ]; then
     exl echo "Error: tibanna lambda version is not defined";
     handle_error;
 fi
-if [ -z "$AWSF_IMAGE" ]; then
+if [ -z "babessell/tibanna-awsf:3.3.2" ]; then
     exl echo "Error: awsf docker image is not defined";
     handle_error;
 fi
@@ -132,7 +132,7 @@ exl echo "## instance type: $(ec2metadata --instance-type)"
 exl echo "## instance id: $(ec2metadata --instance-id)"
 exl echo "## instance region: $INSTANCE_REGION"
 exl echo "## tibanna lambda version: $TIBANNA_VERSION"
-exl echo "## awsf image: $AWSF_IMAGE"
+exl echo "## awsf image: babessell/tibanna-awsf:3.3.2"
 exl echo "## ami id: $(ec2metadata --ami-id)"
 exl echo "## availability zone: $(ec2metadata --availability-zone)"
 exl echo "## security groups: $(ec2metadata --security-groups)"
@@ -248,7 +248,7 @@ send_log
 exl echo "## Pulling Docker image"
 tries=0
 until [ $tries -ge 3 ]; do
-  if exl_no_error docker pull $AWSF_IMAGE; then
+  if exl_no_error docker pull babessell/tibanna-awsf:3.3.2; then
     exl echo "## Pull successfull on try $tries"
     break
   else
@@ -261,9 +261,9 @@ send_log
 # pass S3_ENCRYPT_KEY_ID if desired
 if [ -z "$S3_ENCRYPT_KEY_ID" ];
 then
-  docker run --privileged --net host -v /home/ubuntu/:/home/ubuntu/:rw -v /mnt/:/mnt/:rw $AWSF_IMAGE run.sh -i $JOBID -l $LOGBUCKET -f $EBS_DEVICE -S $STATUS $SINGULARITY_OPTION_TO_PASS
+  docker run --privileged --net host -v /home/ubuntu/:/home/ubuntu/:rw -v /mnt/:/mnt/:rw babessell/tibanna-awsf:3.3.2 run.sh -i $JOBID -l $LOGBUCKET -f $EBS_DEVICE -S $STATUS $SINGULARITY_OPTION_TO_PASS
 else
-  docker run --privileged --net host -v /home/ubuntu/:/home/ubuntu/:rw -v /mnt/:/mnt/:rw $AWSF_IMAGE run.sh -i $JOBID -l $LOGBUCKET -f $EBS_DEVICE -S $STATUS $SINGULARITY_OPTION_TO_PASS -k $S3_ENCRYPT_KEY_ID
+  docker run --privileged --net host -v /home/ubuntu/:/home/ubuntu/:rw -v /mnt/:/mnt/:rw babessell/tibanna-awsf:3.3.2 run.sh -i $JOBID -l $LOGBUCKET -f $EBS_DEVICE -S $STATUS $SINGULARITY_OPTION_TO_PASS -k $S3_ENCRYPT_KEY_ID
 fi
 
 handle_error $?

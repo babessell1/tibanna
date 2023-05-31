@@ -320,7 +320,7 @@ class Config(SerializableObject):
         if not hasattr(self, 'root_ebs_size'):
             self.root_ebs_size = DEFAULT_ROOT_EBS_SIZE
         if not hasattr(self, 'awsf_image'):
-            self.awsf_image = "babessell/tibanna-awsf:3.3.2"
+            self.awsf_image = DEFAULT_AWSF_IMAGE
         if not hasattr(self, 'mem_as_is'):  # if false, add 1GB overhead
             self.mem_as_is = False
         if not hasattr(self, 'ebs_size_as_is'):  # if false, add 5GB overhead
@@ -740,7 +740,7 @@ class Execution(object):
         str += "source $RUN_SCRIPT -i $JOBID -m $SHUTDOWN_MIN"
         str += " -l $LOGBUCKET"
         str += " -V {version}".format(version=__version__)
-        str += " -A {awsf_image}".format("babessell/tibanna-awsf:3.3.2")
+        str += " -A {awsf_image}".format(awsf_image=cfg.awsf_image)
         if cfg.kms_key_id:
             str += " -k %s" % cfg.kms_key_id
         if cfg.password:
